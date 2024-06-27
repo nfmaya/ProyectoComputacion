@@ -1,58 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Rock Paper Scissors</title>
+    <meta charset="UTF-8">
+    <title>Play</title>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-</head>
-<body>
-    <h1>Rock Paper Scissors</h1>
-    <div id="game">
-        <button onclick="choose('rock')">Rock</button>
-        <button onclick="choose('paper')">Paper</button>
-        <button onclick="choose('scissors')">Scissors</button>
-        <button onclick="continuePlay()">Continue</button>
-    </div>
-    <div id="result"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io();
 
-    <script type="text/javascript">
-        var socket = io();
-        var choice = null;
-        var room = "{{ room_id }}";
+            document.querySelectorAll(".play-button").forEach(button => {
+                button.addEventListener("click", () => {
+                    const choice = button.dataset.choice;
+                    socket.emit("play", { choice });
+                });
+            });
 
-        function choose(selectedChoice) {
-            choice = selectedChoice;
-            document.getElementById('result').innerText = `You chose ${choice}. Click continue to play.`;
-        }
-
-        function continuePlay() {
-            if (choice) {
-                socket.emit('play', { room: room, choice: choice });
-            } else {
-                alert('Please make a choice before continuing.');
-            }
-        }
-
-        socket.on('game_result', function(data) {
-            document.getElementById('result').innerText = `You played ${data.player1_choice}. Opponent played ${data.player2_choice}. Result: ${data.result}`;
-        });
-
-        socket.on('error', function(data) {
-            alert(data.error);
-        });
-
-        socket.on('waiting', function(data) {
-            document.getElementById('result').innerText = data.message;
-        });
-
-        socket.on('room_created', function(data) {
-            room = data.room_id;
-            document.getElementById('result').innerText = 'Room created. Waiting for another player to join.';
-        });
-
-        socket.on('room_joined', function(data) {
-            room = data.room_id;
-            document.getElementById('result').innerText = 'Room joined. Make your choice.';
+            socket.on("game_update", data => {
+                document.getElementById("player1_choice").innerText = data.player1_choice || "Waiting for Player 1";
+                document.getElementById("player2_choice").innerText = data.player2_choice || "Waiting for Player 2";
+                if (data.winner !== null) {
+                    document.getElementById("winner").innerText = `Winner: Player ${data.winner}`;
+                }
+            });
         });
     </script>
+</head>
+<body>
+    <h1>Play</h1>
+    <p>Room ID: {{ room_id }}</p>
+    <div>
+        <button class="play-button" data-choice="rock">Rock</button>
+        <button class="play-button" data-choice="paper">Paper</button>
+        <button class="play-button" data-choice="scissors">Scissors</button>
+    </div>
+    <div>
+        <p>Player 1 Choice: <span id="player1_choice">Waiting for Player 1</span></p>
+        <p>Player 2 Choice: <span id="player2_choice">Waiting for Player 2</span></p>
+        <p id="winner"></p>
+    </div>
+    <a href="{{ url_for('index') }}">Back to Home</a>
 </body>
 </html>
