@@ -1,58 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rock Paper Scissors</title>
+    <title>PIEDRA | PAPEL | TIJERA</title>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <link rel="stylesheet" href="main.css">
+
 </head>
 <body>
-    <h1>Rock Paper Scissors</h1>
     <div id="game">
-        <button onclick="choose('rock')">Rock</button>
-        <button onclick="choose('paper')">Paper</button>
-        <button onclick="choose('scissors')">Scissors</button>
-        <button onclick="continuePlay()">Continue</button>
+
+
+        <h1>PIEDRA | PAPEL | TIJERA</h1>
+
+        <div id="campo-batalla" class="campo-batalla">
+            <div id="img-ataque-jugador" class="caja-batala"><!--<img class="img-batalla" src="assets/Papel.PNG" alt="">--></div>
+            <div class="caja-batala"><p class="text-mensajes">VS</p></div>
+            <div id="img-ataque-pc" class="caja-batala"><!--<img class="img-batalla" src="assets/Piedra.PNG" alt="">--></div>
+        </div>
+        <div>
+            <p id="msj-batalla" class="text-mensajes"> </p>
+        </div>
+        <h2>Elije un ataque</h2>
+
+
+        <img id="btn-piedra" class="btn-ataques" src="../assets/Piedra.PNG" alt="">
+        <img id="btn-papel"  class="btn-ataques" src="../assets/Papel.PNG" alt="">
+        <img id="btn-tijeras" class="btn-ataques" src="../assets/Tijeras.PNG" alt="">
+        </p>
+        <img id="btn-continuar" class="btn-ataques" src="../assets/Continuar.png" alt="">
+
+
     </div>
     <div id="result"></div>
 
-    <script type="text/javascript">
-        var socket = io();
-        var choice = null;
-        var room = "{{ room_id }}";
+    <script src="app.js"></script>
 
-        function choose(selectedChoice) {
-            choice = selectedChoice;
-            document.getElementById('result').innerText = `You chose ${choice}. Click continue to play.`;
-        }
-
-        function continuePlay() {
-            if (choice) {
-                socket.emit('play', { room: room, choice: choice });
-            } else {
-                alert('Please make a choice before continuing.');
-            }
-        }
-
-        socket.on('game_result', function(data) {
-            document.getElementById('result').innerText = `You played ${data.player1_choice}. Opponent played ${data.player2_choice}. Result: ${data.result}`;
-        });
-
-        socket.on('error', function(data) {
-            alert(data.error);
-        });
-
-        socket.on('waiting', function(data) {
-            document.getElementById('result').innerText = data.message;
-        });
-
-        socket.on('room_created', function(data) {
-            room = data.room_id;
-            document.getElementById('result').innerText = 'Room created. Waiting for another player to join.';
-        });
-
-        socket.on('room_joined', function(data) {
-            room = data.room_id;
-            document.getElementById('result').innerText = 'Room joined. Make your choice.';
-        });
-    </script>
 </body>
 </html>
