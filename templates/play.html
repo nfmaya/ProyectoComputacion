@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    
 <head>
+<<<<<<< HEAD
     <title>PIEDRA | PAPEL | TIJERA</title>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
 
 </head>
 <body>
@@ -35,5 +38,44 @@
 
     <script src="app.js"></script>
 
+=======
+    <title>Play</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io();
+
+            document.querySelectorAll(".play-button").forEach(button => {
+                button.addEventListener("click", () => {
+                    const choice = button.dataset.choice;
+                    socket.emit("play", { choice });
+                });
+            });
+
+            socket.on("game_update", data => {
+                document.getElementById("player1_choice").innerText = data.player1_choice || "Waiting for Player 1";
+                document.getElementById("player2_choice").innerText = data.player2_choice || "Waiting for Player 2";
+                if (data.winner !== null) {
+                    document.getElementById("winner").innerText = `Winner: Player ${data.winner}`;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Play</h1>
+    <p>Room ID: {{ room_id }}</p>
+    <div>
+        <button class="play-button" data-choice="rock">Rock</button>
+        <button class="play-button" data-choice="paper">Paper</button>
+        <button class="play-button" data-choice="scissors">Scissors</button>
+    </div>
+    <div>
+        <p>Player 1 Choice: <span id="player1_choice">Waiting for Player 1</span></p>
+        <p>Player 2 Choice: <span id="player2_choice">Waiting for Player 2</span></p>
+        <p id="winner"></p>
+    </div>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+>>>>>>> 74c12625d5c9b8e23f28630b1a1814d04cb68184
 </body>
 </html>
