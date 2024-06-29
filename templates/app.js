@@ -85,3 +85,26 @@ socket.on('room_joined', function(data) {
     room = data.room_id;
     document.getElementById('result').innerText = 'Room joined. Make your choice.';
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const socket = io();
+
+    document.querySelectorAll(".btn-ataques").forEach(img => {
+        img.addEventListener("click", () => {
+            //const choice = img.id.replace("btn-", ""); // Obtiene la elección del ID de la imagen
+            
+            console.log("Eleccion:"+choice);
+
+            socket.emit("play", { choice });
+        });
+    });
+
+    socket.on("game_update", data => {
+        document.getElementById("player1_choice").innerText = data.player1_choice || "Waiting for Player 1";
+        document.getElementById("player2_choice").innerText = data.player2_choice || "Waiting for Player 2";
+        if (data.winner !== null) {
+            document.getElementById("winner").innerText = `Winner: Player ${data.winner}`;
+        }
+    });
+});
