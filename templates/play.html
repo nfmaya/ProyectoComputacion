@@ -5,7 +5,7 @@
 
     <title>PIEDRA | PAPEL | TIJERA</title>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <meta charset="UTF-8">
 
 </head>
@@ -14,7 +14,7 @@
 
 
         <h1>PIEDRA | PAPEL | TIJERA</h1>
-        <a href="index.html">Back to Home</a>
+        <a href="{{ url_for('index') }}">Back to Home</a>
 
         <p>Room ID: {{ room_id }}</p>
 
@@ -41,7 +41,7 @@
     </div>
     <div id="result"></div>
 
-    <script src="app.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
 

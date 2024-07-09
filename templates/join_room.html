@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unirse a Sala - PIEDRA | PAPEL | TIJERA</title>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
 
 </head>
@@ -19,6 +19,6 @@
     </form>
 
 </p>
-<a href="index.html">Regresar</a>
+<a href="{{ url_for('index') }}">Regresar</a>
 </body>
 </html>

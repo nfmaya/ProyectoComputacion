@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Crear Sala - PIEDRA | PAPEL | TIJERA</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
 </head>
 <body>
@@ -13,6 +13,6 @@
     </form>
 </p>
 
-    <a href="index.html">Regresar</a>
+    <a href="{{ url_for('index') }}">Regresar</a>
 </body>
 </html>
