@@ -58,9 +58,9 @@ function choose(selectedChoice) {
 
 function continuePlay() {
     if (choice) {
-        socket.emit('play', { room: room, choice: choice });
+       return socket.emit('play', { room: room, choice: choice });
     } else {
-        alert('Debe elegir una opcion antes de seguir.');
+        return alert('Debe elegir una opcion antes de seguir.');
     }
 }
 
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll(".btn-ataques").forEach(img => {
         img.addEventListener("click", () => {
-            //const choice = img.id.replace("btn-", ""); // Obtiene la elección del ID de la imagen
+            //const choice = img.id.replace("btn-", ""); 
             
             console.log("Eleccion:"+choice);
 
