@@ -29,13 +29,13 @@
         <h2>Elije un ataque</h2>
 
 
-        <img id="btn-piedra" class="btn-ataques" src="../assets/Piedra.PNG" alt="">
-        <img id="btn-papel"  class="btn-ataques" src="../assets/Papel.PNG" alt="">
-        <img id="btn-tijeras" class="btn-ataques" src="../assets/Tijeras.PNG" alt="">
+        <img id="btn-piedra" class="btn-ataques" src="{{ url_for('static', filename='Piedra.PNG') }}" alt="">
+        <img id="btn-papel"  class="btn-ataques" src="{{ url_for('static', filename='Papel.PNG') }}" alt="">
+        <img id="btn-tijeras" class="btn-ataques" src="{{ url_for('static', filename='Tijeras.PNG') }}" alt="">
 
         </p>
         
-        <img id="btn-continuar" class="btn-ataques" src="../assets/Continuar.png" alt="">
+        <img id="btn-continuar" class="btn-ataques" src="{{ url_for('static', filename='Continuar.png') }}" alt="">
 
 
     </div>
